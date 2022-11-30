@@ -18,8 +18,6 @@ class Simon
 
     game_over_message
     reset_game
-
-
   end
 
   def take_turn
@@ -32,6 +30,13 @@ class Simon
 
   def show_sequence
     add_random_color
+    @seq.each {|color|
+
+      p color
+      sleep(1)
+      system("clear")
+    
+    }
 
   end
 
@@ -45,6 +50,7 @@ class Simon
         next
       else
         @game_over = true
+        break
       end
     
     }
@@ -58,12 +64,15 @@ class Simon
   end
 
   def round_success_message
-    p 'SUCCESS!'
+    p 'Round over'
+    sleep(2)
+    system("clear")
 
   end
 
   def game_over_message
     self.round_success_message
+    p "You lasted #{@sequence_length} rounds"
 
   end
 
@@ -74,3 +83,6 @@ class Simon
 
   end
 end
+
+s = Simon.new
+s.play
