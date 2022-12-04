@@ -2,14 +2,54 @@
 
 class DoublyLinkedList
 
-    attr_accessor :val, :prev, :next
+    attr_accessor :val, :prev, :next, :tail, :head
 
-    def initialize(val, prev=nil, nex=nil)
+    def initialize(val)
+
         @val = val
-        @prev = prev
-        @next = nex
-        raise 'Invalid prev input. Must be DLL object or nil' unless @prev.instance_of?(DoublyLinkedList) || @prev.nil?
-        raise 'Invalid next input. Must be DLL object or nil' unless @next.instance_of?(DoublyLinkedList) || @next.nil?   
+        @head = self
+        @tail = self
+        @prev = nil
+        @next = nil
+
+    end
+
+    def add(h)
+
+        h.next = self
+        @prev = h
+        @head = h
+        h.tail = @tail
+
+        curr = h
+        until curr.next.nil?
+
+            curr.next.head = h
+            curr = curr.next
+
+        end
+
+    end
+
+    def dequeue
+
+        new_tail = @tail.prev
+        new_tail.next = nil
+        new_tail.tail = new_tail
+        @tail = new_tail
+        curr = new_tail
+
+        until curr.prev.nil?
+            curr.prev.tail = new_tail
+            curr = curr.prev
+        end
+
+    end
+
+    def inspect
+
+        @tail.val
+
     end
 
 end
