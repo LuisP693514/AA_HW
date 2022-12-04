@@ -46,10 +46,4 @@ class DoublyLinkedList
 
     end
 
-    def inspect
-
-        @tail.val
-
-    end
-
 end
