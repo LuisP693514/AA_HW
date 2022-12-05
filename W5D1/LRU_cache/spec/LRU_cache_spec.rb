@@ -77,19 +77,47 @@ describe "LRUCache" do
 
         end
 
-        it 'cache should not exceed max_cache_capacity' do
+        it 'cache should not exceed max_cache_size' do
 
             c.add(1)
-            c.add(1)
-            c.add(1)
-            c.add(1)
-            c.add(1)
-            c.add(1)
+            c.add(2)
+            c.add(3)
+            c.add(4)
+            c.add(5)
+            c.add(6)
+
             expect(c.count).to be(5)
 
         end
 
-    end
+        it 'should remove the least accessed element when adding past the cache limit' do 
 
+            c.add(1)
+            c.add(3)
+            c.add(2)
+            c.add(3)
+            c.add(7)
+            c.add(4)
+            c.add(5)
+
+            expect(c.send(:cache)[0][0]).to be(2)
+            expect(c.send(:cache)[1][0]).to be(3)
+            expect(c.send(:cache)[2][0]).to be(7)
+            expect(c.send(:cache)[3][0]).to be(4)
+            expect(c.send(:cache)[4][0]).to be(5)
+
+        end
+
+        it 'should not add the same element more than once' do
+
+            c.add(1)
+            c.add(1)
+            c.add(1)
+
+            expect(c.count).to be(1)
+
+        end
+
+    end
 
 end
